@@ -1,7 +1,10 @@
-
-import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { CartItem } from '../types';
+import { Minus, Plus, X } from 'lucide-react';
+import CheckoutForm from './CheckoutForm';
+import LoginModal from './LoginModal';
 
 interface CartProps {
   isOpen: boolean;
@@ -12,97 +15,108 @@ interface CartProps {
 }
 
 const Cart = ({ isOpen, onClose, items, onUpdateQuantity, totalAmount }: CartProps) => {
-  if (!isOpen) return null;
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleCheckout = () => {
-    // For now, just show an alert - in a real app this would integrate with payment processing
-    alert(`Order total: $${totalAmount.toFixed(2)}\n\nTo complete this order, connect to Supabase for backend functionality including payment processing and order management.`);
+    if (!isLoggedIn) {
+      setShowLogin(true);
+    } else {
+      setIsCheckingOut(true);
+    }
+  };
+
+  const handleLoginSuccess = () => {
+    setShowLogin(false);
+    setIsLoggedIn(true);
+    setIsCheckingOut(true);
+  };
+
+  const handleCloseCheckout = () => {
+    setIsCheckingOut(false);
+    onClose();
   };
 
   return (
     <>
-      {/* Backdrop */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={onClose} />
-      
-      {/* Cart Panel */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 transform transition-transform duration-300 overflow-y-auto">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-semibold flex items-center">
-            <ShoppingBag className="mr-2" size={24} />
-            Shopping Cart ({items.length})
-          </h2>
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            <X size={24} />
-          </Button>
-        </div>
+      <LoginModal open={showLogin} onClose={() => setShowLogin(false)} onLoginSuccess={handleLoginSuccess} />
+      <Sheet open={isOpen} onOpenChange={onClose}>
+        <SheetContent className="w-full sm:max-w-lg">
+          <SheetHeader>
+            <SheetTitle>{isCheckingOut ? 'Checkout' : 'Your Cart'}</SheetTitle>
+          </SheetHeader>
 
-        {items.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-96">
-            <ShoppingBag size={64} className="text-gray-300 mb-4" />
-            <p className="text-xl text-gray-600 mb-2">Your cart is empty</p>
-            <p className="text-gray-500">Add some products to get started!</p>
-          </div>
-        ) : (
-          <>
-            <div className="flex-1 p-4">
-              {items.map((item) => (
-                <div key={item.id} className="flex items-center space-x-4 py-4 border-b">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-16 h-16 rounded-lg object-cover"
-                  />
-                  
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-sm">{item.name}</h3>
-                    <p className="text-gray-600 text-sm">${item.price}</p>
+          {!isCheckingOut ? (
+            <>
+              <div className="flex-1 overflow-y-auto py-6">
+                {items.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">Your cart is empty</p>
                   </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                    >
-                      <Minus size={16} />
-                    </Button>
-                    <span className="w-8 text-center">{item.quantity}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                    >
-                      <Plus size={16} />
-                    </Button>
+                ) : (
+                  <div className="space-y-4">
+                    {items.map((item) => (
+                      <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="h-20 w-20 object-cover rounded"
+                        />
+                        <div className="flex-1">
+                          <h3 className="font-semibold">{item.name}</h3>
+                          <p className="text-sm text-gray-500">${item.price}</p>
+                          <div className="flex items-center space-x-2 mt-2">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                            >
+                              <Minus className="h-4 w-4" />
+                            </Button>
+                            <span>{item.quantity}</span>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                            >
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="ml-auto"
+                              onClick={() => onUpdateQuantity(item.id, 0)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t p-4 space-y-4">
-              <div className="flex justify-between items-center text-lg font-semibold">
-                <span>Total: ${totalAmount.toFixed(2)}</span>
+                )}
               </div>
-              
-              <Button
-                onClick={handleCheckout}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3"
-                size="lg"
-              >
-                Proceed to Checkout
-              </Button>
-              
-              <Button
-                variant="outline"
-                onClick={onClose}
-                className="w-full"
-              >
-                Continue Shopping
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
+
+              <div className="border-t pt-4">
+                <div className="flex justify-between mb-4">
+                  <span className="text-lg font-semibold">Total:</span>
+                  <span className="text-lg font-bold">${totalAmount.toFixed(2)}</span>
+                </div>
+                <Button
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white"
+                  onClick={handleCheckout}
+                  disabled={items.length === 0}
+                >
+                  Shop Now
+                </Button>
+              </div>
+            </>
+          ) : (
+            <CheckoutForm totalAmount={totalAmount} onClose={handleCloseCheckout} />
+          )}
+        </SheetContent>
+      </Sheet>
     </>
   );
 };

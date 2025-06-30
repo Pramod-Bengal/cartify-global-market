@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -47,6 +46,10 @@ const Index = () => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category === 'all' ? 'all' : category);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header 
@@ -56,12 +59,12 @@ const Index = () => {
         searchQuery={searchQuery}
       />
       
-      <main className="pb-8">
+      <main>
         <Hero />
         
         <CategoryGrid 
           selectedCategory={selectedCategory}
-          onCategorySelect={setSelectedCategory}
+          onCategorySelect={handleCategorySelect}
         />
         
         <ProductGrid

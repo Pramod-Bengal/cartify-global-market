@@ -1,4 +1,3 @@
-
 import { Category } from '../types';
 
 interface CategoryGridProps {
@@ -10,37 +9,37 @@ const categories: Category[] = [
   {
     id: 'electronics',
     name: 'Electronics',
-    image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&h=200&fit=crop',
     productCount: 2500
   },
   {
     id: 'fashion',
     name: 'Fashion',
-    image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=300&h=200&fit=crop',
     productCount: 1800
   },
   {
     id: 'home',
     name: 'Home & Living',
-    image: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=300&h=200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&h=200&fit=crop',
     productCount: 1200
   },
   {
     id: 'sports',
     name: 'Sports & Fitness',
-    image: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=300&h=200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=300&h=200&fit=crop',
     productCount: 950
   },
   {
     id: 'books',
     name: 'Books',
-    image: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300&h=200&fit=crop',
     productCount: 3200
   },
   {
     id: 'beauty',
     name: 'Beauty & Health',
-    image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=300&h=200&fit=crop',
     productCount: 1500
   }
 ];

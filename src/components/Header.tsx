@@ -1,8 +1,8 @@
-
 import { useState } from 'react';
-import { Search, ShoppingCart, User, Menu, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { ShoppingCart, Menu, MapPin, Search, User } from 'lucide-react';
+import NavigationMenu from './NavigationMenu';
 
 interface HeaderProps {
   cartItemCount: number;
@@ -12,87 +12,82 @@ interface HeaderProps {
 }
 
 const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderProps) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [location, setLocation] = useState<string | null>(null);
+
+  const handleLocationSelect = () => {
+    // In a real app, this would open a location picker
+    // For now, just set a dummy location
+    setLocation('New York, NY');
+  };
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <button
-              className="lg:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-            <h1 className="text-2xl font-bold text-blue-600">FlipMart</h1>
-          </div>
-
-          {/* Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <Input
-                type="text"
-                placeholder="Search for products, brands and more"
-                className="pl-10 pr-4 w-full"
-                value={searchQuery}
-                onChange={(e) => onSearch(e.target.value)}
-              />
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" className="hidden md:flex items-center space-x-2">
-              <User size={20} />
-              <span>Login</span>
-            </Button>
-            
+    <>
+      <NavigationMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      
+      <header className="sticky top-0 z-50 bg-blue-600 text-white shadow-md">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center h-16 gap-4">
             <Button
               variant="ghost"
-              className="relative flex items-center space-x-2"
+              size="icon"
+              className="text-white"
+              onClick={() => setIsMenuOpen(true)}
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+
+            <div className="flex-shrink-0">
+              <h1 className="text-2xl font-bold">Cartify</h1>
+              <span className="text-xs">Explore Plus</span>
+            </div>
+
+            <div className="flex-1 max-w-3xl">
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Search for products, brands and more"
+                  value={searchQuery}
+                  onChange={(e) => onSearch(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-white text-gray-900"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              </div>
+            </div>
+
+            <Button
+              variant="ghost"
+              className="text-white hidden md:flex items-center gap-2"
+              onClick={handleLocationSelect}
+            >
+              <MapPin className="h-5 w-5" />
+              {location ? location : 'Select Location'}
+            </Button>
+
+            <Button
+              variant="ghost"
+              className="text-white hidden md:flex items-center gap-2"
+            >
+              <User className="h-5 w-5" />
+              Login
+            </Button>
+
+            <Button
+              variant="ghost"
+              className="text-white relative"
               onClick={onCartClick}
             >
-              <ShoppingCart size={20} />
-              <span className="hidden md:inline">Cart</span>
+              <ShoppingCart className="h-6 w-6" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItemCount}
                 </span>
               )}
             </Button>
           </div>
         </div>
-
-        {/* Mobile Search */}
-        <div className="md:hidden pb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <Input
-              type="text"
-              placeholder="Search products..."
-              className="pl-10 pr-4 w-full"
-              value={searchQuery}
-              onChange={(e) => onSearch(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden border-t bg-white pb-4">
-            <div className="py-4 space-y-2">
-              <Button variant="ghost" className="w-full justify-start">
-                <User size={20} className="mr-2" />
-                Login
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 
