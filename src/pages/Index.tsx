@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import CategoryGrid from '../components/CategoryGrid';
@@ -11,6 +11,7 @@ const Index = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const categoryRef = useRef<HTMLDivElement>(null);
 
   const addToCart = (product: Product) => {
     setCartItems(prev => {
@@ -50,6 +51,10 @@ const Index = () => {
     setSelectedCategory(category === 'all' ? 'all' : category);
   };
 
+  const handleShopNow = () => {
+    categoryRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header 
@@ -60,13 +65,13 @@ const Index = () => {
       />
       
       <main>
-        <Hero />
-        
-        <CategoryGrid 
-          selectedCategory={selectedCategory}
-          onCategorySelect={handleCategorySelect}
-        />
-        
+        <Hero onShopNow={handleShopNow} />
+        <div ref={categoryRef}>
+          <CategoryGrid 
+            selectedCategory={selectedCategory}
+            onCategorySelect={handleCategorySelect}
+          />
+        </div>
         <ProductGrid
           selectedCategory={selectedCategory}
           searchQuery={searchQuery}

@@ -2,6 +2,7 @@ import { Star, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Product } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductGridProps {
   selectedCategory: string;
@@ -724,6 +725,7 @@ const sampleProducts: Product[] = [
 ];
 
 const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGridProps) => {
+  const navigate = useNavigate();
   const filteredProducts = sampleProducts.filter(product => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -759,6 +761,7 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                   <img
                     src={product.image}
                     alt={product.name}
+                    onError={e => (e.currentTarget.src = '/placeholder.svg')}
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   {product.discount && (
@@ -784,15 +787,50 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                   </div>
 
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-
-                  <Button
-                    onClick={() => onAddToCart(product)}
-                    className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-                    disabled={!product.inStock}
-                  >
-                    <ShoppingCart size={16} className="mr-2" />
-                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                  </Button>
+                  <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+                    <button
+                      style={{
+                        background: '#ffa500',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        border: 'none',
+                        borderRadius: '4px',
+                        padding: '12px 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '16px',
+                        cursor: product.inStock ? 'pointer' : 'not-allowed',
+                        flex: 1,
+                        justifyContent: 'center',
+                        opacity: product.inStock ? 1 : 0.6
+                      }}
+                      disabled={!product.inStock}
+                      onClick={() => onAddToCart(product)}
+                    >
+                      <span style={{ marginRight: 8 }}>🛒</span> ADD TO CART
+                    </button>
+                    <button
+                      style={{
+                        background: '#ff6600',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        border: 'none',
+                        borderRadius: '4px',
+                        padding: '12px 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '16px',
+                        cursor: product.inStock ? 'pointer' : 'not-allowed',
+                        flex: 1,
+                        justifyContent: 'center',
+                        opacity: product.inStock ? 1 : 0.6
+                      }}
+                      disabled={!product.inStock}
+                      onClick={() => navigate('/address')}
+                    >
+                      <span style={{ marginRight: 8 }}>⚡</span> BUY NOW
+                    </button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

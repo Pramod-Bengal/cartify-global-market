@@ -1,7 +1,40 @@
-
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
-const Hero = () => {
+interface HeroProps {
+  onShopNow?: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
+  const [open, setOpen] = useState(false);
+  const [mobile, setMobile] = useState('');
+  const [error, setError] = useState('');
+  // const navigate = useNavigate();
+
+  const handleShopNow = () => {
+    if (onShopNow) {
+      onShopNow();
+    }
+    // else {
+    //   navigate('/address');
+    // }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simple validation: 10 digit number
+    if (!/^\d{10}$/.test(mobile)) {
+      setError('Please enter a valid 10-digit mobile number');
+      return;
+    }
+    setError('');
+    // TODO: Handle mobile number submission (e.g., send to backend)
+    setOpen(false);
+    setMobile('');
+  };
+
   return (
     <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
       <div className="container mx-auto px-4">
@@ -15,11 +48,8 @@ const Hero = () => {
               Discover thousands of products at unbeatable prices with fast delivery and easy returns.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white">
+              <Button onClick={handleShopNow} className="mt-6 px-8 py-3 text-lg font-semibold rounded bg-orange-500 hover:bg-orange-600">
                 Shop Now
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
-                Explore Categories
               </Button>
             </div>
           </div>
@@ -34,6 +64,26 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enter Your Mobile Number</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="tel"
+              className="w-full px-3 py-2 border rounded"
+              placeholder="Mobile Number"
+              value={mobile}
+              onChange={e => setMobile(e.target.value)}
+              maxLength={10}
+              required
+            />
+            {error && <div className="text-red-500 text-sm">{error}</div>}
+            <Button type="submit" className="w-full bg-blue-600 text-white">Continue</Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Menu, MapPin, Search, User } from 'lucide-react';
 import NavigationMenu from './NavigationMenu';
+import { Link } from 'react-router-dom';
+// import PincodeLocation from "./PincodeLocation";
 
 interface HeaderProps {
   cartItemCount: number;
@@ -11,67 +13,96 @@ interface HeaderProps {
   searchQuery: string;
 }
 
+const PRODUCTS = [
+  'iPhone 15',
+  'Samsung Galaxy S23',
+  'MacBook Pro',
+  'Sony Headphones',
+  'Nike Shoes',
+  'Adidas T-shirt',
+  'Apple Watch',
+  'Canon Camera',
+  'Bluetooth Speaker',
+  'Smart TV',
+];
+
 const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [location, setLocation] = useState<string | null>(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (accountRef.current && !accountRef.current.contains(event.target as Node)) {
+        setAccountOpen(false);
+      }
+    }
+    if (accountOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [accountOpen]);
 
   const handleLocationSelect = () => {
-    // In a real app, this would open a location picker
-    // For now, just set a dummy location
     setLocation('New York, NY');
   };
+
+  const suggestions =
+    searchQuery.length > 0
+      ? PRODUCTS.filter((item) =>
+          item.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : [];
 
   return (
     <>
       <NavigationMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-      
       <header className="sticky top-0 z-50 bg-blue-600 text-white shadow-md">
         <div className="container mx-auto px-4">
           <div className="flex items-center h-16 gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-white"
-              onClick={() => setIsMenuOpen(true)}
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-
             <div className="flex-shrink-0">
               <h1 className="text-2xl font-bold">Cartify</h1>
               <span className="text-xs">Explore Plus</span>
             </div>
-
             <div className="flex-1 max-w-3xl">
               <div className="relative">
                 <Input
                   type="text"
                   placeholder="Search for products, brands and more"
                   value={searchQuery}
-                  onChange={(e) => onSearch(e.target.value)}
+                  onChange={(e) => {
+                    onSearch(e.target.value);
+                    setShowSuggestions(true);
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
                   className="w-full pl-10 pr-4 py-2 bg-white text-gray-900"
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                {showSuggestions && suggestions.length > 0 && (
+                  <div className="absolute left-0 right-0 mt-1 bg-white border rounded shadow-lg z-10 text-gray-900 max-h-60 overflow-y-auto">
+                    {suggestions.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                        onMouseDown={() => {
+                          onSearch(item);
+                          setShowSuggestions(false);
+                        }}
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
-
-            <Button
-              variant="ghost"
-              className="text-white hidden md:flex items-center gap-2"
-              onClick={handleLocationSelect}
-            >
-              <MapPin className="h-5 w-5" />
-              {location ? location : 'Select Location'}
-            </Button>
-
-            <Button
-              variant="ghost"
-              className="text-white hidden md:flex items-center gap-2"
-            >
-              <User className="h-5 w-5" />
-              Login
-            </Button>
-
             <Button
               variant="ghost"
               className="text-white relative"
@@ -84,6 +115,42 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
                 </span>
               )}
             </Button>
+            {/* My Account Dropdown */}
+            <div className="relative" ref={accountRef}>
+              <Button
+                variant="ghost"
+                className="text-white flex items-center gap-2"
+                onClick={() => setAccountOpen((open) => !open)}
+              >
+                <User className="h-5 w-5" />
+                My Account
+              </Button>
+              {accountOpen && (
+                <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg z-50 text-gray-900">
+                  <Link
+                    to="/account"
+                    className="block px-4 py-2 hover:bg-blue-100 font-semibold"
+                    onClick={() => setAccountOpen(false)}
+                  >
+                    My Account
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="block px-4 py-2 hover:bg-blue-100"
+                    onClick={() => setAccountOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="block px-4 py-2 hover:bg-blue-100"
+                    onClick={() => setAccountOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
