@@ -67,10 +67,10 @@ const Index = () => {
       <main>
         <Hero onShopNow={handleShopNow} />
         <div ref={categoryRef}>
-          <CategoryGrid 
-            selectedCategory={selectedCategory}
-            onCategorySelect={handleCategorySelect}
-          />
+        <CategoryGrid 
+          selectedCategory={selectedCategory}
+          onCategorySelect={handleCategorySelect}
+        />
         </div>
         <ProductGrid
           selectedCategory={selectedCategory}

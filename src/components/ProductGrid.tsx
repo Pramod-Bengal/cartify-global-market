@@ -805,7 +805,7 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                         opacity: product.inStock ? 1 : 0.6
                       }}
                       disabled={!product.inStock}
-                      onClick={() => onAddToCart(product)}
+                    onClick={() => onAddToCart(product)}
                     >
                       <span style={{ marginRight: 8 }}>🛒</span> ADD TO CART
                     </button>
@@ -825,9 +825,9 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                         justifyContent: 'center',
                         opacity: product.inStock ? 1 : 0.6
                       }}
-                      disabled={!product.inStock}
+                    disabled={!product.inStock}
                       onClick={() => navigate('/address')}
-                    >
+                  >
                       <span style={{ marginRight: 8 }}>⚡</span> BUY NOW
                     </button>
                   </div>
