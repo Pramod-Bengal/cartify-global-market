@@ -743,6 +743,15 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
     ));
   };
 
+  const handleBuyNow = () => {
+    const isLoggedIn = !!localStorage.getItem('cartify_token');
+    if (isLoggedIn) {
+      navigate('/address');
+    } else {
+      navigate('/login?redirect=/address');
+    }
+  };
+
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -826,7 +835,7 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                         opacity: product.inStock ? 1 : 0.6
                       }}
                     disabled={!product.inStock}
-                      onClick={() => navigate('/address')}
+                      onClick={handleBuyNow}
                   >
                       <span style={{ marginRight: 8 }}>⚡</span> BUY NOW
                     </button>

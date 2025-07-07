@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const redirect = params.get('redirect') || '/';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +25,9 @@ const LoginPage: React.FC = () => {
       const data = await res.json();
       if (data.status === "success") {
         // Optionally store token: localStorage.setItem("token", data.token);
-        navigate("/"); // Redirect to main page
+        localStorage.setItem('cartify_token', data.token);
+        localStorage.setItem('cartify_user', JSON.stringify(data.user));
+        navigate(redirect);
       } else {
         setError(data.message || "Login failed");
       }
@@ -66,7 +71,7 @@ const LoginPage: React.FC = () => {
         </form>
         <p className="text-sm text-center">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-blue-600 hover:underline">Sign up</Link>
+          <Link to={`/signup${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ''}`} className="text-blue-600 hover:underline">Sign up</Link>
         </p>
       </div>
     </div>

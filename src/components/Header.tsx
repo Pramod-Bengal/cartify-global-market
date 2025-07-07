@@ -32,6 +32,21 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const userStr = localStorage.getItem('cartify_user');
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        setUserName(user.name || null);
+      } else {
+        setUserName(null);
+      }
+    } catch {
+      setUserName(null);
+    }
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -51,6 +66,13 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
 
   const handleLocationSelect = () => {
     setLocation('New York, NY');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('cartify_token');
+    localStorage.removeItem('cartify_user');
+    setAccountOpen(false);
+    window.location.href = '/login';
   };
 
   const suggestions =
@@ -123,7 +145,7 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
                 onClick={() => setAccountOpen((open) => !open)}
               >
                 <User className="h-5 w-5" />
-                My Account
+                {userName ? userName : "My Account"}
               </Button>
               {accountOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg z-50 text-gray-900">
@@ -148,6 +170,12 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
                   >
                     Sign Up
                   </Link>
+                  <button
+                    className="block w-full text-left px-4 py-2 hover:bg-blue-100 text-red-600 font-semibold"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
                 </div>
               )}
             </div>

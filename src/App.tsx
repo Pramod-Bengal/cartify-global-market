@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import DeliveryAddressPage from "./pages/DeliveryAddressPage";
 import AccountPage from "./pages/AccountPage";
+import AuthOptionsPage from "./pages/AuthOptionsPage";
 
 // Placeholder components for missing pages
 const SuperCoinZone = () => <div>SuperCoin Zone</div>;
@@ -58,6 +59,7 @@ const App = () => (
           <Route path="/legal" element={<Legal />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/address" element={<DeliveryAddressPage />} />
+          <Route path="/auth-options" element={<AuthOptionsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

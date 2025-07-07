@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const SignupPage: React.FC = () => {
   const [name, setName] = useState("");
@@ -9,6 +9,9 @@ const SignupPage: React.FC = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const redirect = params.get('redirect');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +41,11 @@ const SignupPage: React.FC = () => {
         setError("");
         setSuccess("Signup successful! Redirecting to login...");
         setTimeout(() => {
-          navigate("/login");
+          if (redirect) {
+            navigate(`/login?redirect=${encodeURIComponent(redirect)}`);
+          } else {
+            navigate("/login");
+          }
         }, 2000);
       } else {
         setError(data.message || data.error || "Signup failed");
@@ -105,7 +112,7 @@ const SignupPage: React.FC = () => {
         </form>
         <p className="text-sm text-center">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
+          <Link to={`/login${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ''}`} className="text-blue-600 hover:underline">Login</Link>
         </p>
       </div>
     </div>
