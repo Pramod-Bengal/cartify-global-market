@@ -43,7 +43,9 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, phone, password } = req.body;
+    console.log('Login attempt:', { email, phone, password }); // Debugging line
     const user = await User.findOne({ $or: [{ email }, { phone }] }).select('+password');
+    console.log('User found:', user); // Debugging line
     if (!user || !(await user.correctPassword(password, user.password))) {
       return res.status(401).json({ status: 'error', message: 'Incorrect credentials' });
     }
