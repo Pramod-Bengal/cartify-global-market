@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Product } from '../types';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "@/components/ui/sonner";
 
 interface ProductGridProps {
   selectedCategory: string;
@@ -12,20 +13,6 @@ interface ProductGridProps {
 
 const sampleProducts: Product[] = [
   // Electronics
-  {
-    id: '1',
-    name: 'iPhone 15 Pro Max',
-    price: 1299,
-    originalPrice: 1399,
-    image: 'https://images.unsplash.com/photo-1695048133382-ff6adf5f3ccc?w=400&h=300&fit=crop',
-    category: 'electronics',
-    rating: 4.8,
-    reviews: 2456,
-    description: 'Latest iPhone with advanced camera system',
-    features: ['128GB Storage', 'A17 Pro Chip', 'Pro Camera System'],
-    inStock: true,
-    discount: 7
-  },
   {
     id: '2',
     name: 'Samsung Galaxy S24 Ultra',
@@ -126,20 +113,6 @@ const sampleProducts: Product[] = [
   },
   // Fashion
   {
-    id: '9',
-    name: 'Nike Air Max 270',
-    price: 150,
-    originalPrice: 180,
-    image: 'https://images.unsplash.com/photo-1517263904808-5dc0d6a3c5d8?w=400&h=300&fit=crop',
-    category: 'fashion',
-    rating: 4.6,
-    reviews: 987,
-    description: 'Comfortable running shoes with air cushioning',
-    features: ['Air Max Technology', 'Breathable Mesh', 'Durable Sole'],
-    inStock: true,
-    discount: 17
-  },
-  {
     id: '10',
     name: 'Adidas Ultraboost 22',
     price: 190,
@@ -208,20 +181,6 @@ const sampleProducts: Product[] = [
     features: ['100% Cotton', 'Kangaroo Pocket', 'Embroidered Logo'],
     inStock: true,
     discount: 25
-  },
-  {
-    id: '15',
-    name: 'Converse Chuck Taylor',
-    price: 65,
-    originalPrice: 85,
-    image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?w=400&h=300&fit=crop',
-    category: 'fashion',
-    rating: 4.1,
-    reviews: 1098,
-    description: 'Classic canvas sneakers',
-    features: ['Canvas Upper', 'Rubber Sole', 'Iconic Design'],
-    inStock: true,
-    discount: 24
   },
   // Home & Living
   {
@@ -293,20 +252,6 @@ const sampleProducts: Product[] = [
     features: ['High Carbon Steel', 'Ergonomic Handle', 'Knife Block'],
     inStock: true,
     discount: 25
-  },
-  {
-    id: '21',
-    name: 'Air Purifier HEPA',
-    price: 199,
-    originalPrice: 249,
-    image: 'https://images.unsplash.com/photo-1585157603226-a160f7bd7a1c?w=400&h=300&fit=crop',
-    category: 'home',
-    rating: 4.5,
-    reviews: 678,
-    description: 'HEPA air purifier for clean air',
-    features: ['HEPA Filter', 'Quiet Operation', 'App Control'],
-    inStock: true,
-    discount: 20
   },
   // Sports & Fitness
   {
@@ -743,8 +688,14 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
     ));
   };
 
+  const handleAddToCart = (product: Product) => {
+    onAddToCart(product);
+    toast("Added to cart!");
+  };
+
   const handleBuyNow = () => {
     const isLoggedIn = !!localStorage.getItem('cartify_token');
+    toast("Proceeding to checkout...");
     if (isLoggedIn) {
       navigate('/address');
     } else {
@@ -753,16 +704,16 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
   };
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold">
+    <section className="py-6 sm:py-12 bg-gray-50">
+      <div className="container mx-auto px-2 sm:px-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-8 gap-2 sm:gap-0">
+          <h2 className="text-xl sm:text-3xl font-bold">
             {selectedCategory === 'all' ? 'All Products' : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Products`}
           </h2>
-          <p className="text-gray-600">{filteredProducts.length} products found</p>
+          <p className="text-gray-600 text-sm sm:text-base">{filteredProducts.length} products found</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {filteredProducts.map((product) => (
             <Card key={product.id} className="group hover:shadow-lg transition-all duration-300 hover:scale-105">
               <CardContent className="p-0">
@@ -771,32 +722,28 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                     src={product.image}
                     alt={product.name}
                     onError={e => (e.currentTarget.src = '/placeholder.svg')}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   {product.discount && (
-                    <div className="absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 rounded text-sm font-semibold">
+                    <div className="absolute top-2 left-2 bg-orange-500 text-white px-2 py-1 rounded text-xs sm:text-sm font-semibold">
                       {product.discount}% OFF
                     </div>
                   )}
                 </div>
-                
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2 line-clamp-2">{product.name}</h3>
-                  
-                  <div className="flex items-center mb-2">
+                <div className="p-3 sm:p-4">
+                  <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2 line-clamp-2">{product.name}</h3>
+                  <div className="flex items-center mb-1 sm:mb-2">
                     <div className="flex">{renderStars(product.rating)}</div>
-                    <span className="ml-2 text-sm text-gray-600">({product.reviews})</span>
+                    <span className="ml-2 text-xs sm:text-sm text-gray-600">({product.reviews})</span>
                   </div>
-
-                  <div className="flex items-center mb-3">
-                    <span className="text-2xl font-bold text-gray-800">${product.price}</span>
+                  <div className="flex items-center mb-2 sm:mb-3">
+                    <span className="text-lg sm:text-2xl font-bold text-gray-800">${product.price}</span>
                     {product.originalPrice && (
-                      <span className="ml-2 text-lg text-gray-500 line-through">${product.originalPrice}</span>
+                      <span className="ml-2 text-base sm:text-lg text-gray-500 line-through">${product.originalPrice}</span>
                     )}
                   </div>
-
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-                  <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+                  <p className="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">{product.description}</p>
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }} className="flex-col sm:flex-row">
                     <button
                       style={{
                         background: '#ffa500',
@@ -814,7 +761,7 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                         opacity: product.inStock ? 1 : 0.6
                       }}
                       disabled={!product.inStock}
-                    onClick={() => onAddToCart(product)}
+                    onClick={() => handleAddToCart(product)}
                     >
                       <span style={{ marginRight: 8 }}>🛒</span> ADD TO CART
                     </button>
@@ -847,8 +794,8 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-xl text-gray-600">No products found matching your criteria.</p>
+          <div className="text-center py-8 sm:py-12">
+            <p className="text-base sm:text-xl text-gray-600">No products found matching your criteria.</p>
           </div>
         )}
       </div>

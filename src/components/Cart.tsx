@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { CartItem } from '../types';
 import { Minus, Plus, X } from 'lucide-react';
 import CheckoutForm from './CheckoutForm';
 import LoginModal from './LoginModal';
+import { toast } from "@/components/ui/sonner";
 
 interface CartProps {
   isOpen: boolean;
@@ -15,15 +17,18 @@ interface CartProps {
 }
 
 const Cart = ({ isOpen, onClose, items, onUpdateQuantity, totalAmount }: CartProps) => {
+  const navigate = useNavigate();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleCheckout = () => {
-    if (!isLoggedIn) {
-      setShowLogin(true);
+  const handleBuyNow = () => {
+    const isLoggedIn = !!localStorage.getItem('cartify_token');
+    toast("Proceeding to checkout...");
+    if (isLoggedIn) {
+      navigate('/address');
     } else {
-      setIsCheckingOut(true);
+      navigate('/login?redirect=/address');
     }
   };
 
@@ -42,14 +47,14 @@ const Cart = ({ isOpen, onClose, items, onUpdateQuantity, totalAmount }: CartPro
     <>
       <LoginModal open={showLogin} onClose={() => setShowLogin(false)} onLoginSuccess={handleLoginSuccess} />
       <Sheet open={isOpen} onOpenChange={onClose}>
-        <SheetContent className="w-full sm:max-w-lg">
+        <SheetContent className="w-full sm:max-w-lg p-2 sm:p-6">
           <SheetHeader>
             <SheetTitle>{isCheckingOut ? 'Checkout' : 'Your Cart'}</SheetTitle>
           </SheetHeader>
 
           {!isCheckingOut ? (
             <>
-              <div className="flex-1 overflow-y-auto py-6">
+              <div className="flex-1 overflow-y-auto py-4 sm:py-6">
                 {items.length === 0 ? (
                   <div className="text-center py-8">
                     <p className="text-gray-500">Your cart is empty</p>
@@ -57,14 +62,14 @@ const Cart = ({ isOpen, onClose, items, onUpdateQuantity, totalAmount }: CartPro
                 ) : (
                   <div className="space-y-4">
                     {items.map((item) => (
-                      <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
+                      <div key={item.id} className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 border-b pb-4">
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="h-20 w-20 object-cover rounded"
+                          className="h-20 w-20 object-cover rounded mb-2 sm:mb-0"
                         />
-                        <div className="flex-1">
-                          <h3 className="font-semibold">{item.name}</h3>
+                        <div className="flex-1 w-full">
+                          <h3 className="font-semibold text-base sm:text-lg">{item.name}</h3>
                           <p className="text-sm text-gray-500">${item.price}</p>
                           <div className="flex items-center space-x-2 mt-2">
                             <Button
@@ -99,16 +104,16 @@ const Cart = ({ isOpen, onClose, items, onUpdateQuantity, totalAmount }: CartPro
               </div>
 
               <div className="border-t pt-4">
-                <div className="flex justify-between mb-4">
+                <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2 sm:gap-0">
                   <span className="text-lg font-semibold">Total:</span>
                   <span className="text-lg font-bold">${totalAmount.toFixed(2)}</span>
                 </div>
                 <Button
                   className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-                  onClick={handleCheckout}
+                  onClick={handleBuyNow}
                   disabled={items.length === 0}
                 >
-                  Shop Now
+                  Buy Now
                 </Button>
               </div>
             </>

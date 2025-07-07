@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     select: false
   },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female'],
+    default: 'Male'
+  },
   location: {
     type: String,
     default: 'Mangalore Statebank'

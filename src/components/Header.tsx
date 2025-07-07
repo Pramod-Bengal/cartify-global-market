@@ -86,13 +86,13 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
     <>
       <NavigationMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       <header className="sticky top-0 z-50 bg-blue-600 text-white shadow-md">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center h-16 gap-4">
-            <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold">Cartify</h1>
+        <div className="container mx-auto px-2 sm:px-4">
+          <div className="flex flex-wrap items-center h-auto min-h-[4rem] gap-2 sm:gap-4 py-2 sm:py-0">
+            <div className="flex-shrink-0 mb-2 sm:mb-0">
+              <h1 className="text-xl sm:text-2xl font-bold">Cartify</h1>
               <span className="text-xs">Explore Plus</span>
             </div>
-            <div className="flex-1 max-w-3xl">
+            <div className="flex-1 max-w-full sm:max-w-3xl w-full order-3 sm:order-none mb-2 sm:mb-0">
               <div className="relative">
                 <Input
                   type="text"
@@ -104,11 +104,11 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
                   }}
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-                  className="w-full pl-10 pr-4 py-2 bg-white text-gray-900"
+                  className="w-full pl-10 pr-4 py-2 bg-white text-gray-900 text-sm sm:text-base"
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 {showSuggestions && suggestions.length > 0 && (
-                  <div className="absolute left-0 right-0 mt-1 bg-white border rounded shadow-lg z-10 text-gray-900 max-h-60 overflow-y-auto">
+                  <div className="absolute left-0 right-0 mt-1 bg-white border rounded shadow-lg z-10 text-gray-900 max-h-60 overflow-y-auto text-sm">
                     {suggestions.map((item, idx) => (
                       <div
                         key={idx}

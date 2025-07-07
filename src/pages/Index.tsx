@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import CategoryGrid from '../components/CategoryGrid';
@@ -7,11 +7,18 @@ import Cart from '../components/Cart';
 import { Product, CartItem } from '../types';
 
 const Index = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const saved = localStorage.getItem('cartify_cart');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const categoryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('cartify_cart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (product: Product) => {
     setCartItems(prev => {
