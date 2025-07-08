@@ -482,20 +482,6 @@ const sampleProducts: Product[] = [
   },
   {
     id: '38',
-    name: 'Electric Toothbrush',
-    price: 79,
-    originalPrice: 99,
-    image: 'https://images.unsplash.com/photo-1559591937-abc3a5d54b02?w=400&h=300&fit=crop',
-    category: 'beauty',
-    rating: 4.3,
-    reviews: 654,
-    description: 'Rechargeable electric toothbrush',
-    features: ['Rechargeable', '2-Min Timer', 'Soft Bristles'],
-    inStock: true,
-    discount: 20
-  },
-  {
-    id: '39',
     name: 'Perfume Eau de Parfum',
     price: 65,
     originalPrice: 90,
