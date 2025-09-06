@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+// Removed import { Mail, Lock } from 'lucide-react';
+import styles from './LoginPage.module.css';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -44,6 +46,7 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block mb-1 text-sm font-medium">Email</label>
+            {/* Removed <Mail /> icon */}
             <input
               type="email"
               className="w-full px-3 py-2 border rounded"
@@ -54,6 +57,7 @@ const LoginPage: React.FC = () => {
           </div>
           <div>
             <label className="block mb-1 text-sm font-medium">Password</label>
+            {/* Removed <Lock /> icon */}
             <input
               type="password"
               className="w-full px-3 py-2 border rounded"
@@ -62,6 +66,7 @@ const LoginPage: React.FC = () => {
               required
             />
           </div>
+          {/* Removed Remember me and Forgot Password section */}
           <button
             type="submit"
             className="w-full py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700"

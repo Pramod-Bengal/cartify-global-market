@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import styles from './SignupPage.module.css';
 
 const SignupPage: React.FC = () => {
   const [name, setName] = useState("");
@@ -57,7 +58,7 @@ const SignupPage: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow">
+      <div className={`${styles['signup-card']} w-full max-w-md p-8 space-y-6 bg-white rounded shadow`}>
         <h2 className="text-2xl font-bold text-center">Sign Up</h2>
         {error && <div className="text-red-500 text-sm">{error}</div>}
         {success && <div className="text-green-600 text-sm">{success}</div>}
