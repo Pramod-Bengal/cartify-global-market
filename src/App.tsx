@@ -10,6 +10,8 @@ import DeliveryAddressPage from "./pages/DeliveryAddressPage";
 import AccountPage from "./pages/AccountPage";
 import AuthOptionsPage from "./pages/AuthOptionsPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import GlobalPopup from "@/components/ui/GlobalPopup";
+import { GlobalPopupProvider, useGlobalPopup } from "./contexts/GlobalPopupContext";
 
 // Placeholder components for missing pages
 const SuperCoinZone = () => <div>SuperCoin Zone</div>;
@@ -32,40 +34,60 @@ const Legal = () => <div>Legal</div>;
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/supercoin-zone" element={<SuperCoinZone />} />
-          <Route path="/cartify-plus-zone" element={<CartifyPlusZone />} />
-          <Route path="/all-categories" element={<AllCategories />} />
-          <Route path="/more-on-cartify" element={<MoreOnCartify />} />
-          <Route path="/choose-language" element={<ChooseLanguage />} />
-          <Route path="/offer-zone" element={<OfferZone />} />
-          <Route path="/sell-on-cartify" element={<SellOnCartify />} />
-          <Route path="/my-orders" element={<MyOrders />} />
-          <Route path="/coupons" element={<Coupons />} />
-          <Route path="/my-cart" element={<MyCart />} />
-          <Route path="/my-wishlist" element={<MyWishlist />} />
-          <Route path="/my-account" element={<MyAccount />} />
-          <Route path="/my-notifications" element={<MyNotifications />} />
-          <Route path="/notification-preferences" element={<NotificationPreferences />} />
-          <Route path="/help-centre" element={<HelpCentre />} />
-          <Route path="/legal" element={<Legal />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/address" element={<DeliveryAddressPage />} />
-          <Route path="/auth-options" element={<AuthOptionsPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <GlobalPopupProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/supercoin-zone" element={<SuperCoinZone />} />
+            <Route path="/cartify-plus-zone" element={<CartifyPlusZone />} />
+            <Route path="/all-categories" element={<AllCategories />} />
+            <Route path="/more-on-cartify" element={<MoreOnCartify />} />
+            <Route path="/choose-language" element={<ChooseLanguage />} />
+            <Route path="/offer-zone" element={<OfferZone />} />
+            <Route path="/sell-on-cartify" element={<SellOnCartify />} />
+            <Route path="/my-orders" element={<MyOrders />} />
+            <Route path="/coupons" element={<Coupons />} />
+            <Route path="/my-cart" element={<MyCart />} />
+            <Route path="/my-wishlist" element={<MyWishlist />} />
+            <Route path="/my-account" element={<MyAccount />} />
+            <Route path="/my-notifications" element={<MyNotifications />} />
+            <Route path="/notification-preferences" element={<NotificationPreferences />} />
+            <Route path="/help-centre" element={<HelpCentre />} />
+            <Route path="/legal" element={<Legal />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/address" element={<DeliveryAddressPage />} />
+            <Route path="/auth-options" element={<AuthOptionsPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+      <GlobalPopupWrapper />
+    </QueryClientProvider>
+  </GlobalPopupProvider>
 );
+
+const GlobalPopupWrapper = () => {
+  const { isOpen, popupContent, closePopup } = useGlobalPopup();
+
+  if (!popupContent) return null; // Don't render if no content
+
+  return (
+    <GlobalPopup
+      isOpen={isOpen}
+      onClose={closePopup}
+      title={popupContent.title}
+      description={popupContent.description}
+    >
+      {popupContent.content}
+    </GlobalPopup>
+  );
+};
 
 export default App;

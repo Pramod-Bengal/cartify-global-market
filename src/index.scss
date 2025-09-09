@@ -100,6 +100,15 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: linear-gradient(to right, #007bff, #00c8ff, #007bff); /* Blue gradient */
+    background-size: 200% 200%;
+    animation: gradient-animation 15s ease infinite;
   }
+}
+
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

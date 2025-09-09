@@ -56,14 +56,19 @@ const Index = () => {
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category === 'all' ? 'all' : category);
+    // Use a setTimeout to allow state update and re-render before scrolling
+    setTimeout(() => {
+      categoryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 0);
   };
 
   const handleShopNow = () => {
     categoryRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setSelectedCategory('all');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Header 
         cartItemCount={getTotalItems()}
         onCartClick={() => setIsCartOpen(true)}
@@ -73,7 +78,7 @@ const Index = () => {
       
       <main>
         <Hero onShopNow={handleShopNow} />
-        <div ref={categoryRef}>
+        <div ref={categoryRef} className="text-gray-800 pt-16">
         <CategoryGrid 
           selectedCategory={selectedCategory}
           onCategorySelect={handleCategorySelect}

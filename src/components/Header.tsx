@@ -1,9 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Menu, MapPin, Search, User } from 'lucide-react';
+import { ShoppingCart, Menu, MapPin, Search, User, ArrowLeft } from 'lucide-react';
 import NavigationMenu from './NavigationMenu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+// Removed import { useTheme } from "next-themes";
+// Removed import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuTrigger,
+// } from "@/components/ui/dropdown-menu"
 // import PincodeLocation from "./PincodeLocation";
 
 interface HeaderProps {
@@ -33,6 +40,9 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
   const [accountOpen, setAccountOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const locationHook = useLocation();
+  // Removed const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     try {
@@ -92,6 +102,15 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
               <h1 className="text-xl sm:text-2xl font-bold">Cartify</h1>
               <span className="text-xs">Explore Plus</span>
             </div>
+            {locationHook.pathname !== '/' && (
+              <Button
+                variant="ghost"
+                className="text-white sm:hidden"
+                onClick={() => navigate(-1)}
+              >
+                <ArrowLeft className="h-6 w-6" />
+              </Button>
+            )}
             <div className="flex-1 max-w-full sm:max-w-3xl w-full order-3 sm:order-none mb-2 sm:mb-0">
               <div className="relative">
                 <Input
@@ -179,6 +198,7 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
                 </div>
               )}
             </div>
+            {/* Removed Theme Toggle DropdownMenu */}
           </div>
         </div>
       </header>

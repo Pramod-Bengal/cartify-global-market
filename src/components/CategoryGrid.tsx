@@ -46,9 +46,9 @@ const categories: Category[] = [
 
 const CategoryGrid = ({ selectedCategory, onCategorySelect }: CategoryGridProps) => {
   return (
-    <section className="py-12 bg-white">
+    <section className="py-12">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Shop by Category</h2>
+        <h2 className="text-3xl font-bold text-center mb-8 text-white">Shop by Category</h2>
         
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           <button
@@ -56,7 +56,7 @@ const CategoryGrid = ({ selectedCategory, onCategorySelect }: CategoryGridProps)
             className={`px-6 py-2 rounded-full transition-all ${
               selectedCategory === 'all'
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                : 'bg-white text-gray-700 hover:bg-gray-200'
             }`}
           >
             All Products
@@ -68,7 +68,7 @@ const CategoryGrid = ({ selectedCategory, onCategorySelect }: CategoryGridProps)
               className={`px-6 py-2 rounded-full transition-all ${
                 selectedCategory === category.id
                   ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-white text-gray-700 hover:bg-gray-200'
               }`}
             >
               {category.name}
@@ -83,7 +83,7 @@ const CategoryGrid = ({ selectedCategory, onCategorySelect }: CategoryGridProps)
               className="group cursor-pointer"
               onClick={() => onCategorySelect(category.id)}
             >
-              <div className="bg-gray-50 rounded-lg p-6 text-center transition-all group-hover:shadow-lg group-hover:scale-105">
+              <div className="bg-white border border-gray-200 rounded-lg p-6 text-center transition-all group-hover:shadow-lg group-hover:scale-105">
                 <img
                   src={category.image}
                   alt={category.name}

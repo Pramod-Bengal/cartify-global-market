@@ -690,13 +690,13 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
   };
 
   return (
-    <section className="py-6 sm:py-12 bg-gray-50">
+    <section className="py-6 sm:py-12">
       <div className="container mx-auto px-2 sm:px-4">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-8 gap-2 sm:gap-0">
-          <h2 className="text-xl sm:text-3xl font-bold">
+          <h2 className="text-xl sm:text-3xl font-bold text-gray-800">
             {selectedCategory === 'all' ? 'All Products' : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Products`}
           </h2>
-          <p className="text-gray-600 text-sm sm:text-base">{filteredProducts.length} products found</p>
+          <p className="text-gray-800 text-sm sm:text-base">{filteredProducts.length} products found</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
@@ -707,7 +707,6 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                   <img
                     src={product.image}
                     alt={product.name}
-                    onError={e => (e.currentTarget.src = '/placeholder.svg')}
                     className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   {product.discount && (
@@ -717,18 +716,18 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                   )}
                 </div>
                 <div className="p-3 sm:p-4">
-                  <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2 line-clamp-2">{product.name}</h3>
+                  <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2 line-clamp-2 text-gray-800">{product.name}</h3>
                   <div className="flex items-center mb-1 sm:mb-2">
                     <div className="flex">{renderStars(product.rating)}</div>
-                    <span className="ml-2 text-xs sm:text-sm text-gray-600">({product.reviews})</span>
+                    <span className="ml-2 text-xs sm:text-sm text-gray-800">({product.reviews})</span>
                   </div>
                   <div className="flex items-center mb-2 sm:mb-3">
                     <span className="text-lg sm:text-2xl font-bold text-gray-800">${product.price}</span>
                     {product.originalPrice && (
-                      <span className="ml-2 text-base sm:text-lg text-gray-500 line-through">${product.originalPrice}</span>
+                      <span className="ml-2 text-base sm:text-lg text-gray-800 line-through">${product.originalPrice}</span>
                     )}
                   </div>
-                  <p className="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">{product.description}</p>
+                  <p className="text-gray-800 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">{product.description}</p>
                   <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }} className="flex-col sm:flex-row">
                     <button
                       style={{
@@ -781,7 +780,7 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-8 sm:py-12">
-            <p className="text-base sm:text-xl text-gray-600">No products found matching your criteria.</p>
+            <p className="text-base sm:text-xl text-gray-800">No products found matching your criteria.</p>
           </div>
         )}
       </div>
