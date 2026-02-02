@@ -34,11 +34,11 @@ const DeliveryAddressPage = () => {
     setSuccess("");
     setError("");
     try {
-      const res = await fetch("http://localhost:9000/api/address/add", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/address/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": "cartify123"
+          "x-api-key": (import.meta.env.VITE_API_KEY as string) || "cartify123",
         },
         body: JSON.stringify(form)
       });

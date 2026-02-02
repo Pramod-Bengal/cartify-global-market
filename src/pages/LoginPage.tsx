@@ -16,11 +16,11 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch("http://localhost:9000/api/auth/login", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": "cartify123"
+          "x-api-key": (import.meta.env.VITE_API_KEY as string) || "cartify123",
         },
         body: JSON.stringify({ email, password }),
       });

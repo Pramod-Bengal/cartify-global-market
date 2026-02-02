@@ -26,9 +26,9 @@ const AccountPage = () => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem('cartify_token');
-        const res = await fetch('http://localhost:9000/api/user/me', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/me`, {
           headers: {
-            'x-api-key': 'cartify123',
+            'x-api-key': (import.meta.env.VITE_API_KEY as string) || 'cartify123',
             ...(token ? { 'Authorization': `Bearer ${token}` } : {})
           }
         });
@@ -48,11 +48,11 @@ const AccountPage = () => {
     setError("");
     try {
       const token = localStorage.getItem('cartify_token');
-      const res = await fetch("http://localhost:9000/api/user/update", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": "cartify123",
+          'x-api-key': (import.meta.env.VITE_API_KEY as string) || 'cartify123',
           ...(token ? { "Authorization": `Bearer ${token}` } : {})
         },
         body: JSON.stringify({
