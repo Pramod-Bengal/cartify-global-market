@@ -88,14 +88,14 @@ const Header = ({ cartItemCount, onCartClick, onSearch, searchQuery }: HeaderPro
   const suggestions =
     searchQuery.length > 0
       ? PRODUCTS.filter((item) =>
-          item.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        item.toLowerCase().includes(searchQuery.toLowerCase())
+      )
       : [];
 
   return (
     <>
       <NavigationMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-      <header className="sticky top-0 z-50 bg-blue-600 text-white shadow-md">
+      <header className="sticky top-0 z-50 bg-slate-950 text-white shadow-md">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="flex flex-wrap items-center h-auto min-h-[4rem] gap-2 sm:gap-4 py-2 sm:py-0">
             <div className="flex-shrink-0 mb-2 sm:mb-0">

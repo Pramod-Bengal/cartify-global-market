@@ -77,8 +77,8 @@ const Index = () => {
       />
 
       <main>
-        {/* Blue Background Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 pb-12">
+        {/* Blue/Black Background Section */}
+        <div className="bg-gradient-to-b from-slate-950 via-blue-900 to-blue-700 pb-12">
           <Hero onShopNow={handleShopNow} />
           <div ref={categoryRef} className="pt-4">
             <CategoryGrid

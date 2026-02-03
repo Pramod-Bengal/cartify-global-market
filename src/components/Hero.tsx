@@ -36,7 +36,7 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
   };
 
   return (
-    <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+    <section className="bg-gradient-to-br from-slate-900 via-blue-800 to-blue-600 text-white py-16">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">

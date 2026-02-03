@@ -74,7 +74,7 @@ const DeliveryAddressPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 bg-slate-950">
       <div className="w-full max-w-2xl p-4 sm:p-8 space-y-4 sm:space-y-6 bg-white rounded shadow">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Delivery Address</h2>
         {/* {success && <div className="text-green-600 text-sm mb-2">{success}</div>} */}

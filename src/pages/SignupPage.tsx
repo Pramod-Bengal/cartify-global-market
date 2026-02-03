@@ -60,7 +60,7 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className={`${styles['signup-page']} flex items-center justify-center min-h-screen`}>
+    <div className={`${styles['signup-page']} flex items-center justify-center min-h-screen bg-slate-950`}>
       <div className={`${styles['signup-card']} w-full max-w-md p-8 space-y-6 text-gray-800`}>
         <h2 className="text-2xl font-bold text-center text-gray-800">Sign Up</h2>
         {error && <div className="text-red-500 text-sm text-center">{error}</div>}

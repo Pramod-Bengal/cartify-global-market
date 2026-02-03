@@ -104,54 +104,56 @@ const AccountPage = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 sm:p-6 bg-white rounded shadow mt-4 sm:mt-8 text-gray-900">
-      <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 text-gray-900">Personal Information</h2>
-      {success && <div className="text-green-600 text-sm mb-2">{success}</div>}
-      {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
-      <div className="mb-3 sm:mb-4">
-        <div className="font-semibold mb-1 sm:mb-2 text-gray-900">Your Gender</div>
-        <label className="mr-4 text-gray-900">
-          <input type="radio" name="gender" value="Male" checked={gender === "Male"} onChange={() => handleGenderChange("Male")} /> Male
-        </label>
-        <label className="text-gray-900">
-          <input type="radio" name="gender" value="Female" checked={gender === "Female"} onChange={() => handleGenderChange("Female")} /> Female
-        </label>
-      </div>
-      <div className="mb-3 sm:mb-4">
-        <div className="font-semibold mb-1 sm:mb-2 text-gray-900">Email Address <span className="text-blue-600 text-sm font-normal cursor-pointer" onClick={() => setEditingEmail(true)}>Edit</span></div>
-        {editingEmail ? (
-          <div className="flex flex-col sm:flex-row gap-2">
-            <input className="border px-2 py-1 rounded w-full sm:w-auto text-gray-900" value={emailInput} onChange={e => setEmailInput(e.target.value)} />
-            <button className="bg-blue-600 text-white px-3 py-1 rounded w-full sm:w-auto" onClick={handleEmailSave}>Save</button>
-            <button className="text-gray-500 px-2 w-full sm:w-auto" onClick={() => setEditingEmail(false)}>Cancel</button>
-          </div>
-        ) : (
-          <div className="text-gray-900">{email}</div>
-        )}
-      </div>
-      <div className="mb-3 sm:mb-4">
-        <div className="font-semibold mb-1 sm:mb-2 text-gray-900">Mobile Number <span className="text-blue-600 text-sm font-normal cursor-pointer" onClick={() => setEditingMobile(true)}>Edit</span></div>
-        {editingMobile ? (
-          <div className="flex flex-col sm:flex-row gap-2">
-            <input className="border px-2 py-1 rounded w-full sm:w-auto text-gray-900" value={mobileInput} onChange={e => setMobileInput(e.target.value)} />
-            <button className="bg-blue-600 text-white px-3 py-1 rounded w-full sm:w-auto" onClick={handleMobileSave}>Save</button>
-            <button className="text-gray-500 px-2 w-full sm:w-auto" onClick={() => setEditingMobile(false)}>Cancel</button>
-          </div>
-        ) : (
-          <div className="text-gray-900">{mobile}</div>
-        )}
-      </div>
-      <div className="mb-6">
-        <h3 className="font-semibold mb-2 text-gray-900">FAQs</h3>
-        <ul className="list-disc pl-6 text-gray-900 text-xs sm:text-sm space-y-2">
-          <li>What happens when I update my email address (or mobile number)?<br /><span className="text-gray-700">Your login email id (or mobile number) changes, likewise. You'll receive all your account related communication on your updated email address (or mobile number).</span></li>
-          <li>When will my Cartify account be updated with the new email address (or mobile number)?<br /><span className="text-gray-700">It happens as soon as you confirm the verification code sent to your email (or mobile) and save the changes.</span></li>
-          <li>What happens to my existing Cartify account when I update my email address (or mobile number)?<br /><span className="text-gray-700">Updating your email address (or mobile number) doesn't invalidate your account. Your account remains fully functional. You'll continue seeing your Order history, saved information and personal details.</span></li>
-          <li>Does my Seller account get affected when I update my email address?<br /><span className="text-gray-700">Cartify has a 'single sign-on' policy. Any changes will reflect in your Seller account also.</span></li>
-        </ul>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto" onClick={handleSave}>Save</button>
+    <div className="min-h-screen bg-slate-950 py-6 sm:py-12 px-4">
+      <div className="max-w-2xl mx-auto p-4 sm:p-6 bg-white rounded shadow text-gray-900">
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4 text-gray-900">Personal Information</h2>
+        {success && <div className="text-green-600 text-sm mb-2">{success}</div>}
+        {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
+        <div className="mb-3 sm:mb-4">
+          <div className="font-semibold mb-1 sm:mb-2 text-gray-900">Your Gender</div>
+          <label className="mr-4 text-gray-900">
+            <input type="radio" name="gender" value="Male" checked={gender === "Male"} onChange={() => handleGenderChange("Male")} /> Male
+          </label>
+          <label className="text-gray-900">
+            <input type="radio" name="gender" value="Female" checked={gender === "Female"} onChange={() => handleGenderChange("Female")} /> Female
+          </label>
+        </div>
+        <div className="mb-3 sm:mb-4">
+          <div className="font-semibold mb-1 sm:mb-2 text-gray-900">Email Address <span className="text-blue-600 text-sm font-normal cursor-pointer" onClick={() => setEditingEmail(true)}>Edit</span></div>
+          {editingEmail ? (
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input className="border px-2 py-1 rounded w-full sm:w-auto text-gray-900" value={emailInput} onChange={e => setEmailInput(e.target.value)} />
+              <button className="bg-blue-600 text-white px-3 py-1 rounded w-full sm:w-auto" onClick={handleEmailSave}>Save</button>
+              <button className="text-gray-500 px-2 w-full sm:w-auto" onClick={() => setEditingEmail(false)}>Cancel</button>
+            </div>
+          ) : (
+            <div className="text-gray-900">{email}</div>
+          )}
+        </div>
+        <div className="mb-3 sm:mb-4">
+          <div className="font-semibold mb-1 sm:mb-2 text-gray-900">Mobile Number <span className="text-blue-600 text-sm font-normal cursor-pointer" onClick={() => setEditingMobile(true)}>Edit</span></div>
+          {editingMobile ? (
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input className="border px-2 py-1 rounded w-full sm:w-auto text-gray-900" value={mobileInput} onChange={e => setMobileInput(e.target.value)} />
+              <button className="bg-blue-600 text-white px-3 py-1 rounded w-full sm:w-auto" onClick={handleMobileSave}>Save</button>
+              <button className="text-gray-500 px-2 w-full sm:w-auto" onClick={() => setEditingMobile(false)}>Cancel</button>
+            </div>
+          ) : (
+            <div className="text-gray-900">{mobile}</div>
+          )}
+        </div>
+        <div className="mb-6">
+          <h3 className="font-semibold mb-2 text-gray-900">FAQs</h3>
+          <ul className="list-disc pl-6 text-gray-900 text-xs sm:text-sm space-y-2">
+            <li>What happens when I update my email address (or mobile number)?<br /><span className="text-gray-700">Your login email id (or mobile number) changes, likewise. You'll receive all your account related communication on your updated email address (or mobile number).</span></li>
+            <li>When will my Cartify account be updated with the new email address (or mobile number)?<br /><span className="text-gray-700">It happens as soon as you confirm the verification code sent to your email (or mobile) and save the changes.</span></li>
+            <li>What happens to my existing Cartify account when I update my email address (or mobile number)?<br /><span className="text-gray-700">Updating your email address (or mobile number) doesn't invalidate your account. Your account remains fully functional. You'll continue seeing your Order history, saved information and personal details.</span></li>
+            <li>Does my Seller account get affected when I update my email address?<br /><span className="text-gray-700">Cartify has a 'single sign-on' policy. Any changes will reflect in your Seller account also.</span></li>
+          </ul>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto" onClick={handleSave}>Save</button>
+        </div>
       </div>
     </div>
   );
