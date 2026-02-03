@@ -660,7 +660,7 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
   const filteredProducts = sampleProducts.filter(product => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
+      product.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -728,48 +728,20 @@ const ProductGrid = ({ selectedCategory, searchQuery, onAddToCart }: ProductGrid
                     )}
                   </div>
                   <p className="text-gray-800 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">{product.description}</p>
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }} className="flex-col sm:flex-row">
+                  <div className="flex flex-col sm:flex-row gap-2 mt-3 w-full">
                     <button
-                      style={{
-                        background: '#ffa500',
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        border: 'none',
-                        borderRadius: '4px',
-                        padding: '12px 0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: '16px',
-                        cursor: product.inStock ? 'pointer' : 'not-allowed',
-                        flex: 1,
-                        justifyContent: 'center',
-                        opacity: product.inStock ? 1 : 0.6
-                      }}
+                      className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 sm:py-3 rounded flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                       disabled={!product.inStock}
-                    onClick={() => handleAddToCart(product)}
+                      onClick={() => handleAddToCart(product)}
                     >
-                      <span style={{ marginRight: 8 }}>🛒</span> ADD TO CART
+                      <span className="mr-2">🛒</span> ADD TO CART
                     </button>
                     <button
-                      style={{
-                        background: '#ff6600',
-                        color: '#fff',
-                        fontWeight: 'bold',
-                        border: 'none',
-                        borderRadius: '4px',
-                        padding: '12px 0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: '16px',
-                        cursor: product.inStock ? 'pointer' : 'not-allowed',
-                        flex: 1,
-                        justifyContent: 'center',
-                        opacity: product.inStock ? 1 : 0.6
-                      }}
-                    disabled={!product.inStock}
+                      className="flex-1 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 sm:py-3 rounded flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                      disabled={!product.inStock}
                       onClick={handleBuyNow}
-                  >
-                      <span style={{ marginRight: 8 }}>⚡</span> BUY NOW
+                    >
+                      <span className="mr-2">⚡</span> BUY NOW
                     </button>
                   </div>
                 </div>

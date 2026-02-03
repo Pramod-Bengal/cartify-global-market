@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { API_KEY, getApiUrl } from "../config";
 
 // Get userId from localStorage if available
 let USER_ID = "";
@@ -8,7 +9,7 @@ try {
     const user = JSON.parse(userStr);
     USER_ID = user._id || "";
   }
-} catch {}
+} catch { }
 
 const AccountPage = () => {
   const [gender, setGender] = useState("");
@@ -26,9 +27,9 @@ const AccountPage = () => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem('cartify_token');
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/me`, {
+        const res = await fetch(getApiUrl('/api/user/me'), {
           headers: {
-            'x-api-key': (import.meta.env.VITE_API_KEY as string) || 'cartify123',
+            'x-api-key': API_KEY,
             ...(token ? { 'Authorization': `Bearer ${token}` } : {})
           }
         });
@@ -38,7 +39,7 @@ const AccountPage = () => {
           setMobile(data.user.phone || "");
           setGender(data.user.gender || "");
         }
-      } catch {}
+      } catch { }
     };
     fetchUser();
   }, []);
@@ -48,11 +49,11 @@ const AccountPage = () => {
     setError("");
     try {
       const token = localStorage.getItem('cartify_token');
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/update`, {
+      const res = await fetch(getApiUrl('/api/user/update'), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          'x-api-key': (import.meta.env.VITE_API_KEY as string) || 'cartify123',
+          'x-api-key': API_KEY,
           ...(token ? { "Authorization": `Bearer ${token}` } : {})
         },
         body: JSON.stringify({

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from './SignupPage.module.css';
+import { API_KEY, getApiUrl } from "../config";
 
 const SignupPage: React.FC = () => {
   const [name, setName] = useState("");
@@ -31,11 +32,11 @@ const SignupPage: React.FC = () => {
     setSuccess("");
     setError("");
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
+      const res = await fetch(getApiUrl('/api/auth/signup'), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": (import.meta.env.VITE_API_KEY as string) || "cartify123",
+          "x-api-key": API_KEY,
         },
         body: JSON.stringify({ name, email, password }),
       });

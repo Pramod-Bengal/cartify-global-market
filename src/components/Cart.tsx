@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { CartItem } from '../types';
 import { Minus, Plus, X } from 'lucide-react';
@@ -50,6 +50,9 @@ const Cart = ({ isOpen, onClose, items, onUpdateQuantity, totalAmount }: CartPro
         <SheetContent className="w-full sm:max-w-lg p-2 sm:p-6">
           <SheetHeader>
             <SheetTitle>{isCheckingOut ? 'Checkout' : 'Your Cart'}</SheetTitle>
+            <SheetDescription className="hidden">
+              Review your cart items and proceed to checkout
+            </SheetDescription>
           </SheetHeader>
 
           {!isCheckingOut ? (

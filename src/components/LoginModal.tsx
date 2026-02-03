@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 interface LoginModalProps {
   open: boolean;
@@ -49,14 +56,15 @@ const LoginModal = ({ open, onClose, onLoginSuccess }: LoginModalProps) => {
     }
   };
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-8 relative">
-        <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-600" onClick={onClose}>&times;</button>
-        <h2 className="text-2xl font-bold mb-2">Log in to complete your shopping</h2>
-        <p className="text-gray-500 mb-6">Shop and track your orders easily</p>
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Log in to complete your shopping</DialogTitle>
+          <DialogDescription>
+            Shop and track your orders easily
+          </DialogDescription>
+        </DialogHeader>
         <form onSubmit={e => { e.preventDefault(); handleContinue(); }}>
           {!useEmail ? (
             <div className="flex items-center border rounded mb-2 overflow-hidden">
@@ -110,8 +118,8 @@ const LoginModal = ({ open, onClose, onLoginSuccess }: LoginModalProps) => {
             Continue
           </Button>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

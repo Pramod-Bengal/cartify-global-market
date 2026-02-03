@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 // Removed import { Mail, Lock } from 'lucide-react';
 import styles from './LoginPage.module.css';
+import { API_KEY, getApiUrl } from "../config";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -16,11 +17,11 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+      const res = await fetch(getApiUrl('/api/auth/login'), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": (import.meta.env.VITE_API_KEY as string) || "cartify123",
+          "x-api-key": API_KEY,
         },
         body: JSON.stringify({ email, password }),
       });

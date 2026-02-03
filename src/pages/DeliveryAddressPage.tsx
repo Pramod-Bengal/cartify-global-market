@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { API_KEY, getApiUrl } from "../config";
 
 const states = [
   "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
@@ -34,11 +35,11 @@ const DeliveryAddressPage = () => {
     setSuccess("");
     setError("");
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/address/add`, {
+      const res = await fetch(getApiUrl('/api/address/add'), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": (import.meta.env.VITE_API_KEY as string) || "cartify123",
+          "x-api-key": API_KEY,
         },
         body: JSON.stringify(form)
       });

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
@@ -68,6 +68,9 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Enter Your Mobile Number</DialogTitle>
+            <DialogDescription>
+              Please provide your contact number to begin shopping.
+            </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input

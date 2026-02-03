@@ -69,26 +69,33 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <Header 
+      <Header
         cartItemCount={getTotalItems()}
         onCartClick={() => setIsCartOpen(true)}
         onSearch={setSearchQuery}
         searchQuery={searchQuery}
       />
-      
+
       <main>
-        <Hero onShopNow={handleShopNow} />
-        <div ref={categoryRef} className="text-gray-800 pt-16">
-        <CategoryGrid 
-          selectedCategory={selectedCategory}
-          onCategorySelect={handleCategorySelect}
-        />
+        {/* Blue Background Section */}
+        <div className="bg-gradient-to-r from-blue-600 to-blue-800 pb-12">
+          <Hero onShopNow={handleShopNow} />
+          <div ref={categoryRef} className="pt-4">
+            <CategoryGrid
+              selectedCategory={selectedCategory}
+              onCategorySelect={handleCategorySelect}
+            />
+          </div>
         </div>
-        <ProductGrid
-          selectedCategory={selectedCategory}
-          searchQuery={searchQuery}
-          onAddToCart={addToCart}
-        />
+
+        {/* White Background Section for Products */}
+        <div className="bg-gray-50 min-h-screen">
+          <ProductGrid
+            selectedCategory={selectedCategory}
+            searchQuery={searchQuery}
+            onAddToCart={addToCart}
+          />
+        </div>
       </main>
 
       <Cart
