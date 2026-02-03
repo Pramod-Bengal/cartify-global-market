@@ -5,8 +5,5 @@
 /* Removed @keyframes gradient-animation */
 
 .login-card {
-  background: white;
-  backdrop-filter: none;
-  border-radius: 0.5rem;
-  border: 1px solid #e2e8f0; 
+  /* background removed to allow dark theme from tailwind */
 }
