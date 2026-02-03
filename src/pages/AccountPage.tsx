@@ -33,6 +33,12 @@ const AccountPage = () => {
             ...(token ? { 'Authorization': `Bearer ${token}` } : {})
           }
         });
+        if (res.status === 401) {
+          localStorage.removeItem('cartify_token');
+          localStorage.removeItem('cartify_user');
+          window.location.href = '/login';
+          return;
+        }
         const data = await res.json();
         if (data.status === 'success') {
           setEmail(data.user.email || "");
@@ -62,6 +68,12 @@ const AccountPage = () => {
           gender
         })
       });
+      if (res.status === 401) {
+        localStorage.removeItem('cartify_token');
+        localStorage.removeItem('cartify_user');
+        window.location.href = '/login';
+        return;
+      }
       const data = await res.json();
       if (data.status === "success") {
         setSuccess("Personal information updated!");
