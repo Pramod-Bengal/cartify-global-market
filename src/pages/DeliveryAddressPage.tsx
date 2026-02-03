@@ -75,39 +75,43 @@ const DeliveryAddressPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 bg-slate-950">
-      <div className="w-full max-w-2xl p-4 sm:p-8 space-y-4 sm:space-y-6 bg-white rounded shadow">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Delivery Address</h2>
+      <div className="w-full max-w-2xl p-4 sm:p-8 space-y-4 sm:space-y-6 bg-slate-900 border border-slate-800 rounded shadow-xl text-white">
+        <h2 className="text-2xl font-bold mb-4 text-white">Delivery Address</h2>
         {/* {success && <div className="text-green-600 text-sm mb-2">{success}</div>} */}
         {error && <div className="text-red-500 text-sm mb-2 text-center">{error}</div>}
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col sm:flex-row gap-4">
-            <input name="name" value={form.name} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="Name" required />
-            <input name="mobile" value={form.mobile} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="10-digit mobile number" required />
+            <input name="name" value={form.name} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="Name" required />
+            <input name="mobile" value={form.mobile} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="10-digit mobile number" required />
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <input name="pincode" value={form.pincode} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="Pincode" required />
-            <input name="locality" value={form.locality} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="Locality" required />
+            <input name="pincode" value={form.pincode} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="Pincode" required />
+            <input name="locality" value={form.locality} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="Locality" required />
           </div>
-          <input name="address" value={form.address} onChange={handleChange} type="text" className="w-full px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="Address (Area and Street)" required />
+          <input name="address" value={form.address} onChange={handleChange} type="text" className="w-full px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="Address (Area and Street)" required />
           <div className="flex flex-col sm:flex-row gap-4">
-            <input name="city" value={form.city} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="City/District/Town" required />
-            <select name="state" value={form.state} onChange={handleChange} className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" required >
+            <input name="city" value={form.city} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="City/District/Town" required />
+            <select name="state" value={form.state} onChange={handleChange} className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" required >
               <option value="" disabled>--Select State--</option>
               {states.map(state => <option key={state} value={state}>{state}</option>)}
             </select>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <input name="landmark" value={form.landmark} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="Landmark (Optional)" />
-            <input name="alternatePhone" value={form.alternatePhone} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border rounded bg-gray-700 text-white placeholder-gray-400 font-bold" placeholder="Alternate Phone (Optional)" />
+            <input name="landmark" value={form.landmark} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="Landmark (Optional)" />
+            <input name="alternatePhone" value={form.alternatePhone} onChange={handleChange} type="text" className="w-full sm:w-1/2 px-3 py-2 border border-slate-700 rounded bg-slate-950 text-white placeholder-gray-400 font-bold" placeholder="Alternate Phone (Optional)" />
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-start sm:items-center text-gray-800">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-start sm:items-center text-gray-300">
             <label className="flex items-center gap-2 font-bold">
-              <input type="radio" name="addressType" value="Home" checked={form.addressType === "Home"} onChange={handleChange} className="form-radio text-blue-600 bg-gray-700 border-gray-600" />
+              <input type="radio" name="addressType" value="Home" checked={form.addressType === "Home"} onChange={handleChange} className="form-radio text-blue-600 bg-slate-950 border-slate-700" />
               Home (All day delivery)
             </label>
             <label className="flex items-center gap-2 font-bold">
-              <input type="radio" name="addressType" value="Work" checked={form.addressType === "Work"} onChange={handleChange} className="form-radio text-blue-600 bg-gray-700 border-gray-600" />
+              <input type="radio" name="addressType" value="Work" checked={form.addressType === "Work"} onChange={handleChange} className="form-radio text-blue-600 bg-slate-950 border-slate-700" />
               Work (Delivery between 10 AM - 5 PM)
+            </label>
+            <label className="flex items-center gap-2 font-bold">
+              <input type="checkbox" className="form-checkbox text-blue-600 bg-slate-950 border-slate-700" />
+              Make this my default address
             </label>
           </div>
           <button type="submit" className="w-full py-2 font-semibold text-white bg-orange-500 rounded hover:bg-orange-600 mt-2">SAVE AND DELIVER HERE</button>
