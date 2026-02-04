@@ -59,6 +59,14 @@ exports.signup = async (req, res) => {
     res.status(201).json({ status: 'success', token, user: newUser });
     console.log('Response sent'); // Debug log
   } catch (error) {
+    console.error('Signup Error:', error);
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyValue)[0];
+      return res.status(400).json({
+        status: 'error',
+        message: `This ${field} is already registered. Please use a different one or log in.`
+      });
+    }
     res.status(400).json({ status: 'error', message: error.message });
   }
 };
