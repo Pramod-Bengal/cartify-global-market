@@ -28,8 +28,11 @@ exports.signup = async (req, res) => {
     let { name, email, phone, password, location } = req.body;
 
     // Sanitize phone: convert empty string to undefined so MongoDB 'sparse' index works
+    // Also remove any non-digit characters (dashes, spaces, etc.)
     if (!phone || phone.trim() === '') {
       phone = undefined;
+    } else {
+      phone = phone.replace(/\D/g, ''); // Remove all non-digits
     }
 
     const query = [{ email }];
