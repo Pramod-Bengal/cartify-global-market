@@ -25,16 +25,36 @@ const createSendToken = (user, statusCode, res) => {
 exports.signup = async (req, res) => {
   console.log('Signup request body:', req.body); // Debugging line
   try {
-    const { name, email, phone, password, location } = req.body;
+    let { name, email, phone, password, location } = req.body;
+
+    // Sanitize phone: convert empty string to undefined so MongoDB 'sparse' index works
+    if (!phone || phone.trim() === '') {
+      phone = undefined;
+    }
+
     const query = [{ email }];
     if (phone) query.push({ phone });
     const existingUser = await User.findOne({ $or: query });
+    console.log('Duplicate check complete. Exists?', !!existingUser); // Debug log
     if (existingUser) {
       return res.status(400).json({ status: 'error', message: 'User already exists' });
     }
+    console.log('Creating new user...'); // Debug log
     const newUser = await User.create({ name, email, phone, password, location });
-    const token = signToken(newUser._id);
+    console.log('User created with ID:', newUser._id); // Debug log
+
+    // Explicitly handle token generation error
+    let token;
+    try {
+      token = signToken(newUser._id);
+      console.log('Token generated'); // Debug log
+    } catch (tokenError) {
+      console.error('Token generation failed:', tokenError);
+      throw new Error('Token generation failed');
+    }
+
     res.status(201).json({ status: 'success', token, user: newUser });
+    console.log('Response sent'); // Debug log
   } catch (error) {
     res.status(400).json({ status: 'error', message: error.message });
   }

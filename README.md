@@ -75,6 +75,9 @@ This project consists of a React/Vite frontend and a Node.js/Express backend. Bo
     *   **Build Command**: `npm run build` (or `yarn build`).
     *   **Publish Directory**: `dist` (this is the default output directory for Vite builds).
     *   **Environment Variables**: Add any frontend environment variables (e.g., `VITE_API_URL` pointing to your deployed backend URL).
+    *   **Redirects/Rewrites**: **CRITICAL FOR REACT APPS**.
+        - Add a Rewrite Rule: Source `/*`, Destination `/index.html`, Action `Rewrite`.
+        - Without this, refreshing pages like `/login` will result in 404 errors.
 
 5.  **Deploy**: Click "Create Static Site". Render will build and deploy your frontend, providing a public URL.
 
